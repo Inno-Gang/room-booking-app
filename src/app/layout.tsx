@@ -1,23 +1,22 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import React from "react";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['cyrillic'] })
+const inter = Inter({ subsets: ["cyrillic"] });
 
 export const metadata = {
-  title: 'Room Booking',
-  description: 'Innopolis University room booking service.',
-}
+  title: "Room Booking",
+  description: "Innopolis University room booking service.",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import styles from "./page.module.css"
+import styles from "./page.module.css";
 import Map from "@/components/Map";
 
 export default function MapDemo() {
@@ -8,5 +8,5 @@ export default function MapDemo() {
         <Map></Map>
       </div>
     </main>
-  )
+  );
 }

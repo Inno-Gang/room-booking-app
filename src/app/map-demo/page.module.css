@@ -1,15 +1,17 @@
 .main {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #ccc;
 }
 
-.mapContainer {
-    width: 85%;
-    min-width: 800px;
-    height: 85%;
-    min-height: 400px;
+.map-container {
+  width: 85%;
+  min-width: 800px;
+  height: 85%;
+  min-height: 400px;
 }
