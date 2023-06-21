@@ -1,8 +1,18 @@
 import React from "react";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import classNames from "classnames";
 
-const inter = Inter({ subsets: ["cyrillic"] });
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
+  subsets: ["cyrillic"],
+  weight: "400",
+});
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["cyrillic"],
+  weight: "400",
+});
 
 export const metadata = {
   title: "Room Booking",
@@ -15,8 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en"
+      className={classNames(ibmPlexSans.variable, ibmPlexMono.variable)}
+    >
+      <body>{children}</body>
     </html>
   );
 }

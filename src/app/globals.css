@@ -1,5 +1,13 @@
 :root {
   /* Variables */
+  --font-default: var(--font-ibm-plex-sans), sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), monospace;
+  --color-primary: #40BA21;
+  --color-text-white: #FFF;
+  --color-text-dark: #000;
+  --color-bg-white: #fff;
+  --color-text-gray: #AAA;
+  --color-border: #D4D4D4;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,7 +31,13 @@
 html,
 body {
   overflow-x: hidden;
+
   max-width: 100vw;
+
+  font-family: var(--font-default);
+  color: var(--color-text-dark);
+
+  background-color: var(--color-bg-white);
 }
 
 a {
