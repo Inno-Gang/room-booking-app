@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-clean-order",
+    "stylelint-config-recommended-vue"
+  ],
+  "rules": {
+    "color-hex-length": "long",
+    "selector-class-pattern": [
+      "^[a-zA-Z\\d-_]+$",
+      {
+        "message": "invalid class selector name \"%s\""
+      }
+    ]
+  }
+}
