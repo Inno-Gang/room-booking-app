@@ -1,0 +1,21 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-to-external-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Push to evermake's repository
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.CLONE_REPO_DEPLOY_KEY }}
+          publish_dir: .
+          external_repository: evermake/room-booking-app_clone
+          publish_branch: main
+          allow_empty_commit: true
