@@ -1,0 +1,23 @@
+:root {
+  --font-ibm-plex-sans: 'IBM Plex Sans';
+  --font-ibm-plex-mono: 'IBM Plex Mono';
+  --font-display: var(--font-ibm-plex-sans), sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), monospace;
+  --page-background-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark theme */
+  }
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display), sans-serif;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
