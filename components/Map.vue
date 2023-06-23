@@ -27,14 +27,37 @@
 <script setup lang="ts">
 
 import { ref, onMounted } from "vue"
+import panzoom from "panzoom";
 
+// Map for test function
 const mapRoot = ref<SVGElement | null>(null)
+let roomInfo = new Map()
+roomInfo.set("room-316", "Room 316, available")
+roomInfo.set("_317", "Room 317, not free")
+
+// Function to test, replace to actual realization of callback on focus
+function roomMouseFocusCallback(roomId: String) {
+  console.log(roomInfo.get(roomId))
+}
+
+function roomMouseClickCallback(roomId: String) {
+  if (roomInfo.has(roomId))
+    console.log(roomInfo.get(roomId) + " checked");
+  else
+    roomInfo.set(roomId, "Room " + roomId + " is not free");
+}
 
 onMounted(() => {
+  const map = mapRoot?.value
+  if (map != null)
+    panzoom(map);
+
   mapRoot.value?.querySelectorAll(".room").forEach((node) => {
     node.classList.add("my-class")
-  })
-})
+    node.addEventListener("mouseover", () => roomMouseFocusCallback(node.id))
+    node.addEventListener("click", () => roomMouseClickCallback(node.id))
+  });
+});
 
 </script>
 
