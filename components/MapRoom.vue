@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {useEventListener} from "@vueuse/core";
+
 const props = defineProps<{
   polygonPoints: string,
   id: string,
@@ -10,17 +12,15 @@ const emit = defineEmits<{
   (e: "onMouseLeave", id: string): void
 }>()
 
-const polygonEl = ref<HTMLElement | null>(null)
-
 onMounted(() => {
   // Using Vue's template refs (https://vuejs.org/guide/essentials/template-refs.html)
-  // don't work with polygon element for some reason;
-  // so use it like this.
-  polygonEl.value = document.getElementById(props.id)
-  polygonEl.value?.addEventListener("mouseenter", () => {
+  // don't work with polygon element for some reason, so use it like this.
+  const polygonEl = document.getElementById(props.id)
+
+  useEventListener(polygonEl, "mouseenter", () => {
     emit("onMouseEnter", props.id)
   })
-  polygonEl.value?.addEventListener("mouseleave", () => {
+  useEventListener(polygonEl, "mouseleave", () => {
     emit("onMouseLeave", props.id)
   })
 })
