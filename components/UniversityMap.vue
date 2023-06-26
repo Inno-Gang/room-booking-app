@@ -32,13 +32,21 @@ export type RoomData<ID extends string = string> = {
   nameRu: string,
 }
 
+export type ZoomSettings = {
+  minZoom: number,
+  maxZoom: number,
+  boundsPadding: number,
+}
+
 const props = defineProps<{
-  rooms: RoomsPropIn
+  rooms: RoomsPropIn,
+  zoomSettings: ZoomSettings,
 }>()
 
 const emit = defineEmits<{
   (e: "roomMouseEnter", room: Room): void,
   (e: "roomMouseLeave", room: Room): void,
+  (e: "roomMouseClick", room: Room): void,
 }>()
 
 /**
@@ -96,6 +104,10 @@ onMounted(() => {
   if (map) {
     panzoom(map, {
       // TODO: add bounds, min/max zoom, etc.
+      minZoom: props.zoomSettings.minZoom,
+      maxZoom: props.zoomSettings.maxZoom,
+      bounds: true,
+      boundsPadding: props.zoomSettings.boundsPadding
     });
   }
 });
@@ -108,11 +120,15 @@ function handleRoomMouseLeave(id: RoomId) {
   emit("roomMouseLeave", roomsDataMap.get(id)!)
 }
 
+function handleRoomMouseClick(id: RoomId) {
+  emit("roomMouseClick", roomsDataMap.get(id)!)
+}
+
 </script>
 
 <template>
   <svg ref="mapSvgEl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2339.94 1540.66">
-    <g id="map">
+    <g id="map" class="svg-g">
       <path
         id="floor"
         class="cls-2"
@@ -126,17 +142,14 @@ function handleRoomMouseLeave(id: RoomId) {
         :key="room.id"
         @on-mouse-enter="handleRoomMouseEnter"
         @on-mouse-leave="handleRoomMouseLeave"
+        @on-mouse-click="handleRoomMouseClick"
       />
     </g>
   </svg>
 </template>
 
 <style scoped>
-.my-class {
-  fill: blue;
-}
-
-.my-class:hover {
-  fill: greenyellow;
+.svg-g {
+  fill: #939598
 }
 </style>

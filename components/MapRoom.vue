@@ -10,6 +10,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "onMouseEnter", id: string): void
   (e: "onMouseLeave", id: string): void
+  (e: "onMouseClick", id: string): void
 }>()
 
 onMounted(() => {
@@ -23,6 +24,10 @@ onMounted(() => {
   useEventListener(polygonEl, "mouseleave", () => {
     emit("onMouseLeave", props.id)
   })
+  useEventListener(polygonEl, "click", () => {
+    emit("onMouseClick", props.id)
+  })
+
 })
 </script>
 
