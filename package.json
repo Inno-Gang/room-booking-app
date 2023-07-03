@@ -25,6 +25,7 @@
     "typescript": "^5.1.3"
   },
   "dependencies": {
-    "@vueuse/core": "^10.2.0"
+    "@vueuse/core": "^10.2.0",
+    "panzoom": "^9.4.3"
   }
 }
