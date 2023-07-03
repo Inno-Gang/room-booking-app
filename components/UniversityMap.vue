@@ -36,18 +36,19 @@ export type ZoomSettings = {
   minZoom: number,
   maxZoom: number,
   boundsPadding: number,
+  smoothScroll: boolean,
 }
 
 const props = defineProps<{
   rooms: RoomsPropIn,
   zoomSettings: ZoomSettings,
-}>()
+}>();
 
 const emit = defineEmits<{
   (e: "roomMouseEnter", room: Room): void,
   (e: "roomMouseLeave", room: Room): void,
   (e: "roomMouseClick", room: Room): void,
-}>()
+}>();
 
 /**
  * Rooms data.
@@ -74,15 +75,15 @@ const roomsData = [
     nameEn: "Meeting room 3.3",
     nameRu: "Переговорка 3.3",
   },
-] as const
+] as const;
 
 const roomsDataMap = new Map<RoomId, Room>(roomsData.map((r) => [r.id, {
   id: r.id,
   nameEn: r.nameEn,
   nameRu: r.nameRu,
-}]))
+}]));
 
-const mapSvgEl = ref<SVGElement | null>(null)
+const mapSvgEl = ref<SVGElement | null>(null);
 
 const rooms = computed(() => {
   return roomsData.map((roomData) => {
@@ -90,14 +91,14 @@ const rooms = computed(() => {
       id: roomData.id,
       polygonPoints: roomData.polygonPoints,
       class: "",
-    }
-    const inPropData = props.rooms[roomData.id] ?? null
+    };
+    const inPropData = props.rooms[roomData.id] ?? null;
     if (inPropData) {
-      outPropData.class = inPropData.class
+      outPropData.class = inPropData.class;
     }
-    return outPropData
-  })
-})
+    return outPropData;
+  });
+});
 
 onMounted(() => {
   const map = mapSvgEl.value;
@@ -107,21 +108,26 @@ onMounted(() => {
       minZoom: props.zoomSettings.minZoom,
       maxZoom: props.zoomSettings.maxZoom,
       bounds: true,
-      boundsPadding: props.zoomSettings.boundsPadding
+      boundsPadding: props.zoomSettings.boundsPadding,
+      smoothScroll: props.zoomSettings.smoothScroll,
+      beforeWheel: function (e) {
+        // allow wheel-zoom only if altKey is down. Otherwise - ignore
+        return !e.altKey;
+      },
     });
   }
 });
 
 function handleRoomMouseEnter(id: RoomId) {
-  emit("roomMouseEnter", roomsDataMap.get(id)!)
+  emit("roomMouseEnter", roomsDataMap.get(id)!);
 }
 
 function handleRoomMouseLeave(id: RoomId) {
-  emit("roomMouseLeave", roomsDataMap.get(id)!)
+  emit("roomMouseLeave", roomsDataMap.get(id)!);
 }
 
 function handleRoomMouseClick(id: RoomId) {
-  emit("roomMouseClick", roomsDataMap.get(id)!)
+  emit("roomMouseClick", roomsDataMap.get(id)!);
 }
 
 </script>
