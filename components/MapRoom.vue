@@ -1,38 +1,37 @@
 <script setup lang="ts">
-import {useEventListener} from "@vueuse/core";
+import { useEventListener } from "@vueuse/core";
 
 const props = defineProps<{
   polygonPoints: string,
   id: string,
   class: string,
-}>()
+}>();
 
 const emit = defineEmits<{
   (e: "onMouseEnter", id: string): void
   (e: "onMouseLeave", id: string): void
   (e: "onMouseClick", id: string): void
-}>()
+}>();
+
+const polygonEl = ref<SVGPolygonElement | null>(null);
 
 onMounted(() => {
-  // Using Vue's template refs (https://vuejs.org/guide/essentials/template-refs.html)
-  // don't work with polygon element for some reason, so use it like this.
-  const polygonEl = document.getElementById(props.id)
-
   useEventListener(polygonEl, "mouseenter", () => {
-    emit("onMouseEnter", props.id)
-  })
+    emit("onMouseEnter", props.id);
+  });
   useEventListener(polygonEl, "mouseleave", () => {
-    emit("onMouseLeave", props.id)
-  })
+    emit("onMouseLeave", props.id);
+  });
   useEventListener(polygonEl, "click", () => {
-    emit("onMouseClick", props.id)
-  })
+    emit("onMouseClick", props.id);
+  });
 
-})
+});
 </script>
 
 <template>
   <polygon
+    ref="polygonEl"
     :points="$props.polygonPoints"
     :class="$props.class"
     :id="$props.id"
