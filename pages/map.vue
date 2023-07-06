@@ -14,8 +14,8 @@ const rooms = ref<RoomsPropIn>({
 });
 
 const zoomSettings = ref<ZoomSettings>({
-  minZoom: 0.5,      // relative to size of element
-  maxZoom: 2,        // relative to size of element
+  minZoom: 0.5,       // relative to size of element
+  maxZoom: 2,         // relative to size of element
   boundsPadding: 0.3, // relative to size of element
 });
 

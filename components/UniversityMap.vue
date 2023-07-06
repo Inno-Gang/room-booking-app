@@ -41,13 +41,13 @@ export type ZoomSettings = {
 const props = defineProps<{
   rooms: RoomsPropIn,
   zoomSettings: ZoomSettings,
-}>()
+}>();
 
 const emit = defineEmits<{
   (e: "roomMouseEnter", room: Room): void,
   (e: "roomMouseLeave", room: Room): void,
   (e: "roomMouseClick", room: Room): void,
-}>()
+}>();
 
 /**
  * Rooms data.
@@ -74,15 +74,15 @@ const roomsData = [
     nameEn: "Meeting room 3.3",
     nameRu: "Переговорка 3.3",
   },
-] as const
+] as const;
 
 const roomsDataMap = new Map<RoomId, Room>(roomsData.map((r) => [r.id, {
   id: r.id,
   nameEn: r.nameEn,
   nameRu: r.nameRu,
-}]))
+}]));
 
-const mapSvgEl = ref<SVGElement | null>(null)
+const mapSvgEl = ref<SVGElement | null>(null);
 
 const rooms = computed(() => {
   return roomsData.map((roomData) => {
@@ -90,38 +90,63 @@ const rooms = computed(() => {
       id: roomData.id,
       polygonPoints: roomData.polygonPoints,
       class: "",
-    }
-    const inPropData = props.rooms[roomData.id] ?? null
+    };
+    const inPropData = props.rooms[roomData.id] ?? null;
     if (inPropData) {
-      outPropData.class = inPropData.class
+      outPropData.class = inPropData.class;
     }
-    return outPropData
-  })
-})
+    return outPropData;
+  });
+});
 
 onMounted(() => {
   const map = mapSvgEl.value;
+  let zoom;
   if (map) {
-    panzoom(map, {
+    zoom = panzoom(map, {
       // TODO: add bounds, min/max zoom, etc.
       minZoom: props.zoomSettings.minZoom,
       maxZoom: props.zoomSettings.maxZoom,
       bounds: true,
-      boundsPadding: props.zoomSettings.boundsPadding
+      boundsPadding: props.zoomSettings.boundsPadding,
     });
   }
+  const div = document.getElementById("test");
+  for (let i = 0; i < roomsData.length; i++) {
+    div?.children.item(0)?.insertAdjacentHTML("afterend", "<div style='position: absolute' id='info-" + roomsData[i].id + "'>" + roomsData[i].id + "</div>");
+  }
+  zoom.on("transform", function() {
+    for (let i = 0; i < roomsData.length; i++) {
+      let offsetX, offsetY;
+      const roomDiv = document.getElementById("info-" + roomsData[i].id);
+      if (div) {
+        div.style["left"] = String(map?.getBoundingClientRect().left)
+        div.style["top"] = String(map?.getBoundingClientRect().top)
+        offsetX = (div.getBoundingClientRect().left - div.getBoundingClientRect().right) / 2;
+        offsetY = (div.getBoundingClientRect().top - div.getBoundingClientRect().bottom) / 2;
+        console.log(offsetX, offsetY);
+      }
+      if (roomDiv) {
+        const room = document.getElementById(roomsData[i].id);
+        const x = (room?.getBoundingClientRect().left + room?.getBoundingClientRect().right) / 2;
+        const y = (room?.getBoundingClientRect().top + room?.getBoundingClientRect().bottom) / 2;
+        roomDiv.style["left"] = (x + offsetX).toString() + "px";
+        roomDiv.style["top"] = (y + offsetY).toString() + "px";
+      }
+    }
+  });
 });
 
 function handleRoomMouseEnter(id: RoomId) {
-  emit("roomMouseEnter", roomsDataMap.get(id)!)
+  emit("roomMouseEnter", roomsDataMap.get(id)!);
 }
 
 function handleRoomMouseLeave(id: RoomId) {
-  emit("roomMouseLeave", roomsDataMap.get(id)!)
+  emit("roomMouseLeave", roomsDataMap.get(id)!);
 }
 
 function handleRoomMouseClick(id: RoomId) {
-  emit("roomMouseClick", roomsDataMap.get(id)!)
+  emit("roomMouseClick", roomsDataMap.get(id)!);
 }
 
 </script>
@@ -146,6 +171,13 @@ function handleRoomMouseClick(id: RoomId) {
       />
     </g>
   </svg>
+
+  <div id="test" style="position: absolute">
+    <div>
+      3.3
+    </div>
+  </div>
+
 </template>
 
 <style scoped>
