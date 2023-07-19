@@ -1,0 +1,17 @@
+.openapi-generator-ignore
+apis/AuthApi.ts
+apis/BookingApi.ts
+apis/index.ts
+index.ts
+models/BookRoomRequest.ts
+models/Booking.ts
+models/DemoUserData.ts
+models/GetFreeRoomsRequest.ts
+models/HTTPValidationError.ts
+models/QueryBookingsRequest.ts
+models/Room.ts
+models/RoomType.ts
+models/User.ts
+models/ValidationError.ts
+models/index.ts
+runtime.ts
