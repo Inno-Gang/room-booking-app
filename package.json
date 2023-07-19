@@ -13,19 +13,34 @@
     "lint:styles:fix": "stylelint \"**/*.{css,vue}\" --fix"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
+    "@bg-dev/nuxt-naiveui": "^1.2.1",
+    "@iconify-json/carbon": "^1.1.18",
+    "@nuxt/devtools": "^0.6.7",
+    "@nuxt/image": "1.0.0-rc.1",
     "@nuxtjs/google-fonts": "^3.0.1",
-    "@types/node": "^18",
-    "nuxt": "^3.5.3",
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
+    "@playwright/test": "^1.36.1",
+    "@types/node": "^18.16.19",
+    "naive-ui": "^2.34.4",
+    "nuxt": "^3.6.3",
     "sass": "^1.63.6",
-    "stylelint": "^15.8.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-clean-order": "^5.0.1",
-    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
     "stylelint-config-standard-scss": "^9.0.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.6",
+    "unplugin-icons": "^0.16.5"
   },
   "dependencies": {
-    "@vueuse/core": "^10.2.0",
-    "panzoom": "^9.4.3"
+    "@hebilicious/vue-query-nuxt": "^0.1.0",
+    "@maskito/core": "^1.2.1",
+    "@maskito/kit": "^1.2.1",
+    "@maskito/vue": "^1.2.1",
+    "@pinia/nuxt": "^0.4.11",
+    "@tanstack/vue-query": "^4.29.25",
+    "@vueuse/nuxt": "^10.2.1",
+    "axios": "^1.4.0",
+    "panzoom": "^9.4.3",
+    "pinia": "^2.1.4"
   }
 }

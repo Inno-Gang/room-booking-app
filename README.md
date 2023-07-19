@@ -11,10 +11,13 @@ Make sure to install the dependencies:
 npm install
 ```
 
-Start the development server on `http://localhost:3000`:
+Start the development server:
 
 ```bash
 npm run dev
+
+# or this one to open immediately in the browser
+npm run dev -- -o
 ```
 
 Build the application for production:
